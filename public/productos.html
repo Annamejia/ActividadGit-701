@@ -1,342 +1,1006 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos - Mi Sitio Web</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --accent: #6c63ff;
-            --accent-dark: #4b44cc;
-            --card-bg: #fff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elíxir de Ensueño · Catálogo de Cócteles</title>
 
-        * { box-sizing: border-box; }
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Iconos (para las estrellas de reseña) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- Tipografías -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f8f9fa;
-            overflow-x: hidden;
-        }
+<!-- Nuestros estilos -->
+<style>
+/* =================================================
+   ELÍXIR DE ENSUEÑO — Hoja de estilos del catálogo
+   Paleta y tokens de diseño al inicio del archivo
+   para que sea fácil de editar.
+   ================================================= */
 
-        /* NAV */
-        .navbar {
-            background: #111 !important;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-        }
-        .navbar-brand strong { color: #fff; letter-spacing: 1px; }
-        .nav-link { color: rgba(255,255,255,0.75) !important; transition: color .3s; }
-        .nav-link:hover, .nav-link.active { color: var(--accent) !important; }
+:root{
+  /* --- Colores base --- */
+  --color-bg: #0d0e1f;
+  --color-bg-alt: #12142b;
+  --color-panel: #171933;
+  --color-panel-alt: #1e2140;
 
-        /* HERO */
-        .hero-section {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #fff;
-            padding: 100px 0 80px;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            width: 600px; height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
-            top: -200px; right: -100px;
-            pointer-events: none;
-        }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(108,99,255,0.2);
-            border: 1px solid rgba(108,99,255,0.5);
-            color: #a89fff;
-            font-size: 13px;
-            padding: 6px 16px;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-        .hero-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 20px;
-        }
-        .hero-title span { color: var(--accent); }
-        .hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.65); max-width: 540px; margin-bottom: 36px; }
+  --color-gold: #c9a45c;
+  --color-gold-light: #e6cd93;
+  --color-violet: #9c86c8;
+  --color-violet-soft: #6f5f99;
 
-        /* SEARCH / FILTER */
-        .filter-bar {
-            background: #fff;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-            margin-bottom: 48px;
-        }
-        .filter-bar input {
-            border-radius: 50px;
-            border: 1.5px solid #e0e0e0;
-            padding: 10px 20px;
-            transition: border-color .3s;
-        }
-        .filter-bar input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.12); }
-        .filter-btn {
-            background: transparent;
-            border: 1.5px solid #e0e0e0;
-            border-radius: 50px;
-            padding: 8px 20px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all .25s;
-            color: #555;
-        }
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-        }
+  --color-cream: #f2ede1;
+  --color-muted: #a9a4bd;
+  --color-border: rgba(201, 164, 92, 0.25);
 
-        /* PRODUCT CARDS */
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid #efefef;
-            transition: transform .3s ease, box-shadow .3s ease;
-            cursor: pointer;
-            position: relative;
-        }
-        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(108,99,255,0.15); }
-        .product-card-img {
-            width: 100%; height: 220px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 60px;
-            position: relative;
-            overflow: hidden;
-        }
-        .product-card-badge {
-            position: absolute;
-            top: 14px; left: 14px;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-        }
-        .badge-nuevo { background: #e8f5e9; color: #2e7d32; }
-        .badge-popular { background: #fff3e0; color: #e65100; }
-        .badge-oferta { background: #fce4ec; color: #c62828; }
-        .product-card-body { padding: 20px; }
-        .product-card-title { font-size: 1rem; font-weight: 600; margin-bottom: 6px; color: #1a1a2e; }
-        .product-card-desc { font-size: 13px; color: #888; margin-bottom: 16px; line-height: 1.5; }
-        .product-card-price { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
-        .product-card-price span { font-size: 13px; font-weight: 400; color: #aaa; text-decoration: line-through; margin-left: 6px; }
-        .btn-add {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            width: 100%;
-            transition: background .25s, transform .15s;
-        }
-        .btn-add:hover { background: var(--accent-dark); color: #fff; transform: scale(1.02); }
+  /* --- Tipografía --- */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Jost", "Segoe UI", sans-serif;
+}
 
-        /* STATS SECTION */
-        .stats-section {
-            background: linear-gradient(135deg, #6c63ff 0%, #4b44cc 100%);
-            padding: 64px 0;
-            color: #fff;
-        }
-        .stat-item { text-align: center; }
-        .stat-number { font-size: 2.8rem; font-weight: 700; }
-        .stat-label { font-size: 14px; opacity: .75; margin-top: 4px; }
+*{ box-sizing: border-box; }
 
-        /* TOAST */
-        .cart-toast {
-            position: fixed;
-            bottom: 30px; right: 30px;
-            background: #1a1a2e;
-            color: #fff;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-size: 14px;
-            z-index: 9999;
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-        }
+html{
+  scroll-behavior: smooth;
+}
 
-        /* FOOTER */
-        footer { background: #111 !important; }
+body{
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(156, 134, 200, 0.10), transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(201, 164, 92, 0.08), transparent 40%);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.6;
+  padding-top: 68px; /* deja espacio para la barra de navegación fija */
+}
 
-        /* Animations initial states */
-        .hero-badge, .hero-title, .hero-subtitle, .hero-cta { opacity: 0; }
-        .product-card { opacity: 0; transform: translateY(40px); }
-        .stat-item { opacity: 0; transform: translateY(30px); }
-        .filter-bar { opacity: 0; transform: translateY(20px); }
-    </style>
+/* Compensa la barra fija al saltar a una sección por ancla */
+section, header{
+  scroll-margin-top: 76px;
+}
+
+h1, h2, h3, h4{
+  font-family: var(--font-display);
+  color: var(--color-cream);
+  margin: 0;
+}
+
+p{ margin: 0; }
+
+/* -------------------------------------------------
+   Ornamentos y encabezados de sección
+   ------------------------------------------------- */
+.eyebrow{
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--color-violet);
+  margin-bottom: 0.6rem;
+}
+
+.brand-title{
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.brand-subtitle{
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  font-style: italic;
+  margin-top: 0.8rem;
+}
+
+.ornament{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin: 1.1rem auto;
+  max-width: 320px;
+  color: var(--color-gold);
+}
+.ornament span{
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  opacity: 0.7;
+}
+.ornament i{ font-size: 0.9rem; }
+
+.section-title{
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+.section-title span{
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+.section-title span::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: var(--color-gold);
+}
+
+.section-lead{
+  text-align: center;
+  color: var(--color-muted);
+  max-width: 560px;
+  margin: 0.9rem auto 2.6rem;
+  font-size: 0.98rem;
+}
+
+/* -------------------------------------------------
+   Barra de navegación
+   ------------------------------------------------- */
+.site-navbar{
+  background: rgba(13, 14, 31, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.7rem 0;
+}
+.site-navbar .navbar-brand{
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-cream);
+}
+.site-navbar .navbar-brand span{
+  color: var(--color-gold-light);
+}
+.site-navbar .nav-link{
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  padding: 0.55rem 1rem;
+  transition: color 0.2s ease;
+}
+.site-navbar .nav-link:hover,
+.site-navbar .nav-link:focus{
+  color: var(--color-gold-light);
+}
+.site-navbar .navbar-toggler{
+  border-color: var(--color-border);
+  padding: 0.35rem 0.55rem;
+}
+.site-navbar .navbar-toggler:focus{
+  box-shadow: 0 0 0 0.2rem rgba(201, 164, 92, 0.25);
+}
+.site-navbar .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(230,205,147,0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+@media (max-width: 991.98px){
+  .site-navbar .navbar-collapse{
+    background: var(--color-panel);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    margin-top: 0.8rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* -------------------------------------------------
+   Encabezado
+   ------------------------------------------------- */
+.site-header{
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(180deg, rgba(156, 134, 200, 0.06), transparent);
+}
+
+/* -------------------------------------------------
+   Carrusel de destacados
+   ------------------------------------------------- */
+.featured-section{ padding: 4.5rem 0 2rem; }
+
+.featured-carousel{
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--color-panel);
+}
+
+.featured-slide{
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: 460px;
+}
+
+.featured-media{
+  position: relative;
+  overflow: hidden;
+}
+.featured-media::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 60%, var(--color-panel) 100%);
+}
+.featured-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05) contrast(1.02);
+}
+
+.featured-info{
+  padding: 3rem 3.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+}
+.featured-info .tag{
+  color: var(--color-violet);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.featured-info h3{
+  font-size: 2.3rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.featured-info .desc{
+  color: var(--color-muted);
+  font-size: 0.98rem;
+  max-width: 34ch;
+  margin: 0.6rem 0 0.4rem;
+}
+.featured-info .price{
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-gold-light);
+  font-weight: 600;
+  margin: 0.3rem 0 1rem;
+}
+
+.carousel-indicators [data-bs-target]{
+  background-color: var(--color-gold);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0.35;
+}
+.carousel-indicators .active{ opacity: 1; }
+
+.carousel-control-prev, .carousel-control-next{ width: 5%; }
+.control-icon{
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: rgba(13, 14, 31, 0.6);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold-light);
+  font-size: 1.1rem;
+}
+
+.btn-outline-elixir{
+  align-self: flex-start;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold-light);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  padding: 0.55rem 1.4rem;
+  border-radius: 2px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.btn-outline-elixir:hover{
+  background: var(--color-gold);
+  color: var(--color-bg);
+}
+
+.btn-elixir{
+  border: none;
+  background: linear-gradient(120deg, var(--color-gold), var(--color-gold-light));
+  color: var(--color-bg);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.7rem;
+  border-radius: 2px;
+  align-self: flex-start;
+}
+
+/* -------------------------------------------------
+   Catálogo — cuadrícula de productos
+   ------------------------------------------------- */
+.catalog-section{ padding: 3.5rem 0 5.5rem; }
+
+.product-card{
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.product-card:hover{
+  border-color: var(--color-gold);
+  transform: translateY(-3px);
+}
+
+.product-media-btn{
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: none;
+  background: var(--color-panel-alt);
+  cursor: pointer;
+  overflow: hidden;
+}
+.product-media-btn img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.product-media-btn:hover img{ transform: scale(1.06); }
+
+.product-media-btn::after{
+  content: "Ver ficha";
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0.55rem 0;
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-cream);
+  background: linear-gradient(0deg, rgba(13,14,31,0.92), transparent);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.product-media-btn:hover::after{ transform: translateY(0); }
+
+.price-tag{
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  background: rgba(13, 14, 31, 0.82);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold-light);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 2px;
+}
+
+.product-body{
+  padding: 1.3rem 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.product-body .tag{
+  color: var(--color-violet);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.product-body h3{
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.product-body .desc{
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  margin-top: 0.15rem;
+}
+
+/* -------------------------------------------------
+   Estrellas de reseña
+   Generadas por js/script.js a partir de data-rating
+   ------------------------------------------------- */
+.stars{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18rem;
+  color: var(--color-gold);
+  font-size: 0.95rem;
+  margin: 0.15rem 0;
+}
+.stars .rating-number{
+  margin-left: 0.35rem;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+}
+
+/* -------------------------------------------------
+   Modal de producto
+   ------------------------------------------------- */
+.modal-content{
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-cream);
+  position: relative;
+}
+.modal-content .btn-close{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+}
+.modal-body{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+}
+.modal-media{
+  background: var(--color-panel-alt);
+  min-height: 320px;
+}
+.modal-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.modal-info{
+  padding: 2.4rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.modal-info .tag{
+  color: var(--color-violet);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.modal-info h3{
+  font-size: 2rem;
+  font-weight: 600;
+}
+.modal-info .desc{
+  color: var(--color-muted);
+  font-size: 0.96rem;
+  margin: 0.6rem 0;
+}
+.modal-info .price{
+  font-family: var(--font-display);
+  color: var(--color-gold-light);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+/* -------------------------------------------------
+   Pie de página
+   ------------------------------------------------- */
+.site-footer{
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+.footer-note{
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--color-gold-light);
+}
+.footer-legal{
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  margin-top: 0.5rem;
+}
+
+/* -------------------------------------------------
+   Responsivo
+   ------------------------------------------------- */
+@media (max-width: 767.98px){
+  .featured-slide{ grid-template-columns: 1fr; min-height: auto; }
+  .featured-media{ aspect-ratio: 4 / 3; }
+  .featured-media::after{ display: none; }
+  .featured-info{ padding: 2rem 1.6rem 2.4rem; }
+  .modal-body{ grid-template-columns: 1fr; }
+  .modal-media{ min-height: 220px; }
+  .modal-info{ padding: 1.8rem 1.6rem; }
+}
+
+</style>
 </head>
 <body>
 
-    <!-- Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="../index.html"><strong>Cambio de titulo para ejemplo (Mi sitio web david)</strong></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="productos.html">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contactos.html">Contactos</a></li>
-                </ul>
+<!-- ============================================= -->
+<!--  BARRA DE NAVEGACIÓN                           -->
+<!--  Los enlaces apuntan a las secciones por id.   -->
+<!-- ============================================= -->
+<nav class="navbar navbar-expand-lg site-navbar fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Elíxir <span>de Ensueño</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#productos">Productos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Reseñas</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contáctanos</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================= -->
+<!--  ENCABEZADO                                    -->
+<!-- ============================================= -->
+<header class="site-header">
+  <div class="container text-center py-5">
+    <p class="eyebrow">Barra de autor · Coctelería de colección</p>
+    <h1 class="brand-title">Elíxir de Ensueño</h1>
+    <div class="ornament" aria-hidden="true"><span></span><i class="bi bi-moon-stars"></i><span></span></div>
+    <p class="brand-subtitle">Recetas destiladas con calma, servidas con carácter</p>
+  </div>
+</header>
+
+<!-- ============================================= -->
+<!--  CARRUSEL DE DESTACADOS                        -->
+<!--  Edita cada .carousel-item para cambiar el     -->
+<!--  cóctel destacado: imagen, nombre, precio,     -->
+<!--  descripción corta y data-rating (0 a 5).      -->
+<!-- ============================================= -->
+<section class="featured-section" id="productos">
+  <div class="container">
+    <h2 class="section-title"><span>Destacados de la casa</span></h2>
+
+    <div id="carruselDestacados" class="carousel slide featured-carousel" data-bs-ride="carousel">
+
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carruselDestacados" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carruselDestacados" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carruselDestacados" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+
+      <div class="carousel-inner">
+
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="featured-slide">
+            <div class="featured-media">
+              <!-- Reemplaza esta imagen por la tuya -->
+              <img src="https://images.unsplash.com/photo-1746784615696-c52a22315961?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJlYmlkYSUyMG1vcmFkYXxlbnwwfHwwfHx8MA%3D%3D" alt="Humo Violeta" onerror="this.src='https://placehold.co/900x700/171933/c9a45c?text=Humo+Violeta'">
             </div>
+            <div class="featured-info">
+              <p class="tag">Ahumado &amp; místico</p>
+              <h3>Humo Violeta</h3>
+              <div class="stars" data-rating="4.5"></div>
+              <p class="desc">Gin de enebro, lavanda destilada y un toque de humo de madera de cerezo. Servido en copa helada.</p>
+              <p class="price">$38.000</p>
+              <button class="btn btn-outline-elixir"
+                data-bs-toggle="modal" data-bs-target="#modalProducto"
+                data-name="Humo Violeta"
+                data-price="$38.000"
+                data-category="Ahumado & místico"
+                data-rating="4.5"
+                data-img="https://images.unsplash.com/photo-1746784615696-c52a22315961?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJlYmlkYSUyMG1vcmFkYXxlbnwwfHwwfHx8MA%3D%3D"
+                data-desc="Gin de enebro, lavanda destilada y un toque de humo de madera de cerezo, servido en copa helada bajo una nube de humo aromático. Un cóctel para las noches en que se quiere hablar despacio.">
+                Ver detalles
+              </button>
+            </div>
+          </div>
         </div>
-    </nav>
 
-   
-
-    <!-- Toast notification -->
-    <div class="cart-toast" id="toast">🛒 Producto agregado al carrito</div>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4 mt-5">
-        <div class="container">
-            <p class="mb-0">&copy; 2026 Mi Sitio Web. Todos los derechos reservados.</p>
-            <small>Desarrollado por Rubiela — HTML, CSS, JavaScript y Bootstrap</small>
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+          <div class="featured-slide">
+            <div class="featured-media">
+              <img src="https://images.ctfassets.net/vvbow7h7clgh/2CxRzLR7Nsm9AMGr20tijJ/c4c9b1e2017ba91703670326f86e4d5f/45ae01a348db1b36f6883dbabcc13af935159582.jpg" alt="Oro de Medianoche" onerror="this.src='https://placehold.co/900x700/171933/c9a45c?text=Oro+de+Medianoche'">
+            </div>
+            <div class="featured-info">
+              <p class="tag">Añejo &amp; especiado</p>
+              <h3>Oro de Medianoche</h3>
+              <div class="stars" data-rating="5"></div>
+              <p class="desc">Whisky añejado, miel de brezo, cardamomo y un cordial de naranja quemada.</p>
+              <p class="price">$42.000</p>
+              <button class="btn btn-outline-elixir"
+                data-bs-toggle="modal" data-bs-target="#modalProducto"
+                data-name="Oro de Medianoche"
+                data-price="$42.000"
+                data-category="Añejo & especiado"
+                data-rating="5"
+                data-img="https://images.ctfassets.net/vvbow7h7clgh/2CxRzLR7Nsm9AMGr20tijJ/c4c9b1e2017ba91703670326f86e4d5f/45ae01a348db1b36f6883dbabcc13af935159582.jpg"
+                data-desc="Whisky añejado en barrica, miel de brezo, cardamomo tostado y un cordial de naranja quemada. Cálido, profundo y ligeramente ahumado en el final.">
+                Ver detalles
+              </button>
+            </div>
+          </div>
         </div>
-    </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+          <div class="featured-slide">
+            <div class="featured-media">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbfdKtRfYXboNJ0rCTyPhfW7FVzCmpwP5W-oKjP6IWd6QKA_TRIC92VPZp&s=10" alt="Jardin Secreto" onerror="this.src='https://placehold.co/900x700/171933/c9a45c?text=Jardin+Nocturno'">
+            </div>
+            <div class="featured-info">
+              <p class="tag">Floral &amp; herbal</p>
+              <h3>Jardín Secreto</h3>
+              <div class="stars" data-rating="4"></div>
+              <p class="desc">Vodka infusionado en hierbas, flor de saúco, pepino y un toque de menta silvestre.</p>
+              <p class="price">$34.000</p>
+              <button class="btn btn-outline-elixir"
+                data-bs-toggle="modal" data-bs-target="#modalProducto"
+                data-name="Jardín Nocturno"
+                data-price="$34.000"
+                data-category="Floral & herbal"
+                data-rating="4"
+                data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbfdKtRfYXboNJ0rCTyPhfW7FVzCmpwP5W-oKjP6IWd6QKA_TRIC92VPZp&s=10"
+                data-desc="Vodka infusionado en hierbas de jardín, flor de saúco, pepino fresco y un toque de menta silvestre. Ligero, verde y perfecto para abrir la noche.">
+                Ver detalles
+              </button>
+            </div>
+          </div>
+        </div>
 
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
+      </div>
 
-        // ── Hero animation ──────────────────────────────────────────
-        const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        heroTl
-            .to(".hero-badge",    { opacity: 1, y: 0, duration: .6 })
-            .to(".hero-title",    { opacity: 1, y: 0, duration: .7 }, "-=.2")
-            .to(".hero-subtitle", { opacity: 1, y: 0, duration: .6 }, "-=.3")
-            .to(".hero-cta",      { opacity: 1, y: 0, duration: .5 }, "-=.2");
+      <button class="carousel-control-prev" type="button" data-bs-target="#carruselDestacados" data-bs-slide="prev">
+        <span class="control-icon"><i class="bi bi-chevron-left"></i></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carruselDestacados" data-bs-slide="next">
+        <span class="control-icon"><i class="bi bi-chevron-right"></i></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </div>
+</section>
 
-        // ── Stats counter ───────────────────────────────────────────
-        gsap.to(".stat-item", {
-            opacity: 1, y: 0, duration: .6, stagger: .15, ease: "power2.out",
-            scrollTrigger: { trigger: ".stats-section", start: "top 80%" }
-        });
+<!-- ============================================= -->
+<!--  CATÁLOGO COMPLETO                             -->
+<!--  Cada .product-card es un producto. Duplica    -->
+<!--  el bloque <div class="col..."> para agregar   -->
+<!--  más productos al catálogo.                    -->
+<!-- ============================================= -->
+<section class="catalog-section">
+  <div class="container">
+    <h2 class="section-title"><span>Catálogo completo</span></h2>
+    <p class="section-lead">Cada copa se prepara al momento. Toca la imagen de cualquier cóctel para ver la ficha completa.</p>
 
-        document.querySelectorAll(".stat-number").forEach(el => {
-            const target = +el.dataset.target;
-            ScrollTrigger.create({
-                trigger: el,
-                start: "top 85%",
-                once: true,
-                onEnter: () => {
-                    gsap.to({ val: 0 }, {
-                        val: target, duration: 1.8, ease: "power2.out",
-                        onUpdate: function() { el.textContent = Math.round(this.targets()[0].val).toLocaleString(); }
-                    });
-                }
-            });
-        });
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 catalog-grid">
 
-        // ── Filter bar ──────────────────────────────────────────────
-        gsap.to(".filter-bar", {
-            opacity: 1, y: 0, duration: .6, ease: "power2.out",
-            scrollTrigger: { trigger: ".filter-bar", start: "top 88%" }
-        });
+      <!-- ============ PRODUCTO 1 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Humo Violeta"
+            data-price="$38.000"
+            data-category="Ahumado & místico"
+            data-rating="4.5"
+            data-img="https://images.unsplash.com/photo-1746784615696-c52a22315961?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJlYmlkYSUyMG1vcmFkYXxlbnwwfHwwfHx8MA%3D%3D"
+            data-desc="Gin de enebro, lavanda destilada y un toque de humo de madera de cerezo, servido en copa helada bajo una nube de humo aromático.">
+            <img src="https://images.unsplash.com/photo-1746784615696-c52a22315961?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJlYmlkYSUyMG1vcmFkYXxlbnwwfHwwfHx8MA%3D%3D" alt="Humo Violeta" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Humo+Violeta'">
+            <span class="price-tag">$38.000</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Ahumado &amp; místico</p>
+            <h3>Humo Violeta</h3>
+            <div class="stars" data-rating="4.5"></div>
+            <p class="desc">Gin, lavanda destilada y humo de cerezo.</p>
+          </div>
+        </article>
+      </div>
 
-        // ── Product cards stagger ───────────────────────────────────
-        gsap.to(".product-card", {
-            opacity: 1, y: 0, duration: .55, stagger: .09, ease: "power2.out",
-            scrollTrigger: { trigger: "#product-grid", start: "top 82%" }
-        });
+      <!-- ============ PRODUCTO 2 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Oro de Medianoche"
+            data-price="$42.000"
+            data-category="Añejo & especiado"
+            data-rating="5"
+            data-img="https://images.ctfassets.net/vvbow7h7clgh/2CxRzLR7Nsm9AMGr20tijJ/c4c9b1e2017ba91703670326f86e4d5f/45ae01a348db1b36f6883dbabcc13af935159582.jpg"
+            data-desc="Whisky añejado en barrica, miel de brezo, cardamomo tostado y un cordial de naranja quemada.">
+            <img src="https://images.ctfassets.net/vvbow7h7clgh/2CxRzLR7Nsm9AMGr20tijJ/c4c9b1e2017ba91703670326f86e4d5f/45ae01a348db1b36f6883dbabcc13af935159582.jpg" alt="Oro de Medianoche" alt="Oro de Medianoche" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Oro+de+Medianoche'">
+            <span class="price-tag">$42.000</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Añejo &amp; especiado</p>
+            <h3>Oro de Medianoche</h3>
+            <div class="stars" data-rating="5"></div>
+            <p class="desc">Whisky, miel de brezo y cardamomo.</p>
+          </div>
+        </article>
+      </div>
 
-        // ── Hover pulse on cards ────────────────────────────────────
-        document.querySelectorAll(".product-card").forEach(card => {
-            card.addEventListener("mouseenter", () => {
-                gsap.to(card, { scale: 1.02, duration: .25, ease: "power1.out" });
-            });
-            card.addEventListener("mouseleave", () => {
-                gsap.to(card, { scale: 1, duration: .3, ease: "power1.out" });
-            });
-        });
+      <!-- ============ PRODUCTO 3 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Jardín Secreto"
+            data-price="$34.000"
+            data-category="Floral & herbal"
+            data-rating="4"
+            data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbfdKtRfYXboNJ0rCTyPhfW7FVzCmpwP5W-oKjP6IWd6QKA_TRIC92VPZp&s=10"
+            data-desc="Vodka infusionado en hierbas de jardín, flor de saúco, pepino fresco y un toque de menta silvestre.">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbfdKtRfYXboNJ0rCTyPhfW7FVzCmpwP5W-oKjP6IWd6QKA_TRIC92VPZp&s=10" alt="Jardín Nocturno" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Jardin+Nocturno'">
+            <span class="price-tag">$34.000</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Floral &amp; herbal</p>
+            <h3>Jardín Nocturno</h3>
+            <div class="stars" data-rating="4"></div>
+            <p class="desc">Vodka, saúco, pepino y menta silvestre.</p>
+          </div>
+        </article>
+      </div>
 
-        // ── Add to cart button ──────────────────────────────────────
-        const toast = document.getElementById("toast");
-        document.querySelectorAll(".btn-add").forEach(btn => {
-            btn.addEventListener("click", function() {
-                // Button bounce
-                gsap.timeline()
-                    .to(this, { scale: .92, duration: .1 })
-                    .to(this, { scale: 1, duration: .3, ease: "elastic.out(1,.5)" });
+      <!-- ============ PRODUCTO 4 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Ceniza y Cítrico"
+            data-price="$36.500"
+            data-category="Cítrico & amargo"
+            data-rating="4.5"
+            data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4QOhuaa61NssqNKTm-qif_I2REyI1fLlOx_Ze_d1FFg&s=10"
+            data-desc="Mezcal joven, toronja rosada, amargo de angostura y un borde de sal ahumada.">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4QOhuaa61NssqNKTm-qif_I2REyI1fLlOx_Ze_d1FFg&s=10" alt="Ceniza y Cítrico" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Ceniza+y+Citrico'">
+            <span class="price-tag">$36.500</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Cítrico &amp; amargo</p>
+            <h3>Ceniza y Cítrico</h3>
+            <div class="stars" data-rating="4.5"></div>
+            <p class="desc">Mezcal, toronja rosada y sal ahumada.</p>
+          </div>
+        </article>
+      </div>
 
-                // Toast
-                gsap.killTweensOf(toast);
-                gsap.to(toast, { opacity: 1, y: 0, duration: .4, ease: "power2.out" });
-                gsap.to(toast, { opacity: 0, y: 20, duration: .4, delay: 2.2, ease: "power2.in" });
-            });
-        });
+      <!-- ============ PRODUCTO 5 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Terciopelo Rojo"
+            data-price="$40.000"
+            data-category="Intenso & frutal"
+            data-rating="4"
+            data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpNCL2XtxGCKwhHAysbXHEqynH7Tw5XDGRfr2-UK9lmJ_HWyRkSGEQFpC1&s=10"
+            data-desc="Ron oscuro, hibisco, granadina de la casa y un toque de pimienta rosa.">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpNCL2XtxGCKwhHAysbXHEqynH7Tw5XDGRfr2-UK9lmJ_HWyRkSGEQFpC1&s=10" alt="Terciopelo Rojo" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Terciopelo+Rojo'">
+            <span class="price-tag">$40.000</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Intenso &amp; frutal</p>
+            <h3>Terciopelo Rojo</h3>
+            <div class="stars" data-rating="4"></div>
+            <p class="desc">Ron oscuro, hibisco y pimienta rosa.</p>
+          </div>
+        </article>
+      </div>
 
-        // ── Category filter ─────────────────────────────────────────
-        document.querySelectorAll(".filter-btn").forEach(btn => {
-            btn.addEventListener("click", function() {
-                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-                this.classList.add("active");
-                const cat = this.dataset.cat;
-                const cols = document.querySelectorAll("#product-grid [data-cat]");
+      <!-- ============ PRODUCTO 6 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Bruma de Almendra"
+            data-price="$37.000"
+            data-category="Cremoso & tostado"
+            data-rating="3.5"
+            data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5HunHQx_Y0mQ6hLJZZUlnb-SLoWVGsSeYHMjSJwBf-g&s=10"
+            data-desc="Pisco, orgeat de almendra tostada, clara de huevo y una nube de canela.">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5HunHQx_Y0mQ6hLJZZUlnb-SLoWVGsSeYHMjSJwBf-g&s=10" alt="Bruma de Almendra" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Bruma+de+Almendra'">
+            <span class="price-tag">$37.000</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Cremoso &amp; tostado</p>
+            <h3>Bruma de Almendra</h3>
+            <div class="stars" data-rating="3.5"></div>
+            <p class="desc">Pisco, orgeat de almendra y canela.</p>
+          </div>
+        </article>
+      </div>
 
-                cols.forEach(col => {
-                    const match = cat === "all" || col.dataset.cat === cat;
-                    if (match) {
-                        col.style.display = "";
-                        gsap.fromTo(col.querySelector(".product-card"),
-                            { opacity: 0, y: 24, scale: .96 },
-                            { opacity: 1, y: 0, scale: 1, duration: .4, ease: "power2.out" }
-                        );
-                    } else {
-                        gsap.to(col.querySelector(".product-card"), {
-                            opacity: 0, y: -10, duration: .25, ease: "power2.in",
-                            onComplete: () => { col.style.display = "none"; }
-                        });
-                    }
-                });
-            });
-        });
+      <!-- ============ PRODUCTO 7 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Caperucita Roja"
+            data-price="$35.000"
+            data-category="Amargo & terroso"
+            data-rating="4"
+            data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXxqSEFa-v-InNh5HHRk5Wugg4tp6d_VDi_YoGq050SJK1LLNRenlvRcg&s=10"
+            data-desc="Tequila reposado, betabel especiado, lima y hojas de romero quemado con un toque de ese rojo intenso.">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXxqSEFa-v-InNh5HHRk5Wugg4tp6d_VDi_YoGq050SJK1LLNRenlvRcg&s=10" alt="Raíz Salvaje" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Raiz+Salvaje'">
+            <span class="price-tag">$35.000</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Amargo &amp; terroso</p>
+            <h3>Caperucita Roja</h3>
+            <div class="stars" data-rating="4"></div>
+            <p class="desc">Tequila, betabel especiado y romero.</p>
+          </div>
+        </article>
+      </div>
 
-        // ── Searchbar live filter ───────────────────────────────────
-        document.querySelector(".filter-bar input").addEventListener("input", function() {
-            const q = this.value.toLowerCase();
-            document.querySelectorAll("#product-grid [data-cat]").forEach(col => {
-                const title = col.querySelector(".product-card-title").textContent.toLowerCase();
-                const match = title.includes(q);
-                col.style.display = match ? "" : "none";
-                if (match) {
-                    gsap.fromTo(col.querySelector(".product-card"),
-                        { opacity: 0, y: 16 },
-                        { opacity: 1, y: 0, duration: .35, ease: "power2.out" }
-                    );
-                }
-            });
-        });
+      <!-- ============ PRODUCTO 8 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Perla Salina"
+            data-price="$33.000"
+            data-category="Fresco & mineral"
+            data-rating="4.5"
+            data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9v6VwJGSz5jLUhe_nHjHl9cj7mR8W7HaGTWPD-JuirTFNzSdtb8_abGI&s=10"
+            data-desc="Ginebra marina, pepino, agua tónica artesanal y una perla de sal de mar.">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9v6VwJGSz5jLUhe_nHjHl9cj7mR8W7HaGTWPD-JuirTFNzSdtb8_abGI&s=10" alt="Perla Salina" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Perla+Salina'">
+            <span class="price-tag">$33.000</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Fresco &amp; mineral</p>
+            <h3>Perla Salina</h3>
+            <div class="stars" data-rating="4.5"></div>
+            <p class="desc">Ginebra marina, pepino y sal de mar.</p>
+          </div>
+        </article>
+      </div>
 
-        // ── Navbar link hover ripple ────────────────────────────────
-        document.querySelectorAll(".nav-link").forEach(link => {
-            link.addEventListener("mouseenter", () => gsap.to(link, { letterSpacing: ".5px", duration: .2 }));
-            link.addEventListener("mouseleave", () => gsap.to(link, { letterSpacing: "0px", duration: .2 }));
-        });
-    </script>
+      <!-- ============ PRODUCTO 9 ============ -->
+      <div class="col">
+        <article class="product-card">
+          <button type="button" class="product-media-btn"
+            data-bs-toggle="modal" data-bs-target="#modalProducto"
+            data-name="Ámbar Silvestre"
+            data-price="$39.500"
+            data-category="Dulce & ahumado"
+            data-rating="5"
+            data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqcX8Zedxj7ck447f1DnoTTfTLN-yKUtELoB3qvDR64w&s=10"
+            data-desc="Bourbon, jarabe de arce ahumado, bíter de nuez y cáscara de naranja flameada.">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqcX8Zedxj7ck447f1DnoTTfTLN-yKUtELoB3qvDR64w&s=10" alt="Ámbar Silvestre" onerror="this.src='https://placehold.co/500x500/171933/c9a45c?text=Ambar+Silvestre'">
+            <span class="price-tag">$39.500</span>
+          </button>
+          <div class="product-body">
+            <p class="tag">Dulce &amp; ahumado</p>
+            <h3>Ámbar Silvestre</h3>
+            <div class="stars" data-rating="5"></div>
+            <p class="desc">Bourbon, arce ahumado y naranja flameada.</p>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!--  MODAL DE PRODUCTO (se reutiliza para todos)   -->
+<!-- ============================================= -->
+<div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="modalProductoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      <div class="modal-body">
+        <div class="modal-media">
+          <img id="modalImg" src="" alt="">
+        </div>
+        <div class="modal-info">
+          <p class="tag" id="modalCategory"></p>
+          <h3 id="modalName"></h3>
+          <div class="stars" id="modalStars"></div>
+          <p class="desc" id="modalDesc"></p>
+          <p class="price" id="modalPrice"></p>
+          <button type="button" class="btn btn-elixir">Agregar al pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================= -->
+<!--  PIE DE PÁGINA                                 -->
+<!-- ============================================= -->
+<footer class="site-footer">
+  <div class="container text-center py-5">
+    <div class="ornament" aria-hidden="true"><span></span><i class="bi bi-moon-stars"></i><span></span></div>
+    <p class="footer-note">Elíxir de Ensueño · Coctelería de autor</p>
+    <p class="footer-legal">El exceso de alcohol es perjudicial para la salud. Prohibida su venta a menores de edad.</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Nuestro script -->
+<script>
+/* =================================================
+   ELÍXIR DE ENSUEÑO — Interactividad del catálogo
+   1) Dibuja las estrellas de reseña a partir del
+      atributo data-rating de cada .stars
+   2) Llena el modal de producto con la información
+      del botón que se haya pulsado
+   ================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  /* ---------- 1) ESTRELLAS DE RESEÑA ---------- */
+  // Para cambiar la calificación de un producto, edita el
+  // atributo data-rating en el HTML (acepta decimales .5)
+  function renderStars(container) {
+    const rating = parseFloat(container.getAttribute("data-rating")) || 0;
+    const full = Math.floor(rating);
+    const hasHalf = rating - full >= 0.5;
+    const empty = 5 - full - (hasHalf ? 1 : 0);
+
+    let html = "";
+    for (let i = 0; i < full; i++) html += '<i class="bi bi-star-fill"></i>';
+    if (hasHalf) html += '<i class="bi bi-star-half"></i>';
+    for (let i = 0; i < empty; i++) html += '<i class="bi bi-star"></i>';
+    html += `<span class="rating-number">${rating.toFixed(1)}</span>`;
+
+    container.innerHTML = html;
+  }
+
+  document.querySelectorAll(".stars").forEach(renderStars);
+
+  /* ---------- 2) MODAL DE PRODUCTO ---------- */
+  const modal = document.getElementById("modalProducto");
+  if (!modal) return;
+
+  modal.addEventListener("show.bs.modal", function (event) {
+    const trigger = event.relatedTarget;
+    if (!trigger) return;
+
+    const name = trigger.getAttribute("data-name") || "";
+    const price = trigger.getAttribute("data-price") || "";
+    const category = trigger.getAttribute("data-category") || "";
+    const rating = trigger.getAttribute("data-rating") || "0";
+    const img = trigger.getAttribute("data-img") || "";
+    const desc = trigger.getAttribute("data-desc") || "";
+
+    modal.querySelector("#modalName").textContent = name;
+    modal.querySelector("#modalPrice").textContent = price;
+    modal.querySelector("#modalCategory").textContent = category;
+    modal.querySelector("#modalDesc").textContent = desc;
+
+    const modalImg = modal.querySelector("#modalImg");
+    modalImg.src = img;
+    modalImg.alt = name;
+    modalImg.onerror = function () {
+      this.src = `https://placehold.co/800x800/171933/c9a45c?text=${encodeURIComponent(name)}`;
+    };
+
+    const starsEl = modal.querySelector("#modalStars");
+    starsEl.setAttribute("data-rating", rating);
+    renderStars(starsEl);
+  });
+
+});
+
+</script>
 </body>
 </html>
