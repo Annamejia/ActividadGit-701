@@ -3,26 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactos - Mi Sitio Web</title>
+    <title>Contactos - Elíxir de Ensueño</title>
+    <!-- Tipografías de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../src/styles/style.css">
+    <style>
+        /* Tipografía global Jost */
+        body {
+            font-family: 'Jost', sans-serif;
+            background-color: #16131d;
+            color: #ffffff;
+        }
+
+        /* Estilo idéntico al título principal con font-weight 400 y sin cursiva */
+        .navbar-brand-custom {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            font-weight: 400; /* Mismo grosor exacto que el título principal */
+            font-style: normal;
+        }
+        .navbar-brand-custom .parte-blanca {
+            color: #ffffff;
+        }
+        .navbar-brand-custom .parte-dorada {
+            color: #d4af37;
+        }
+
+        /* Estilos exactos para los enlaces de la barra de navegación */
+        .navbar-nav .nav-link {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            color: #bfaecf !important;
+            transition: color 0.2s ease;
+        }
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #d4af37 !important;
+        }
+
+        /* Estilos específicos para la caja de sugerencias de ciudad */
+        #sugerencias-ciudades {
+            background-color: #2D1B4E !important;
+            border: 1px solid rgba(212, 175, 55, 0.6) !important;
+            border-radius: 0 0 8px 8px;
+            margin-top: 2px;
+            z-index: 1050;
+        }
+        #sugerencias-ciudades .custom-suggestion-item {
+            background-color: transparent !important;
+            color: #F9F9FB !important;
+            font-family: 'Jost', sans-serif !important;
+            border: none !important;
+            padding: 10px 15px;
+            transition: all 0.2s ease;
+        }
+        #sugerencias-ciudades .custom-suggestion-item:hover {
+            background-color: #4A2E65 !important;
+            color: #D4AF37 !important;
+            padding-left: 20px;
+        }
+
+        /* Efecto hover y sombra para el botón de enviar */
+        .btn-magico-enviar {
+            background-color: #d4af37;
+            border: none;
+            color: #16131d;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .btn-magico-enviar:hover {
+            background-color: #e5c158;
+            color: #16131d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+    </style>
 </head>
-<body>
+<body class="contacto-page">
     <!-- Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="../index.html">
-                <strong>Mi Sitio Web</strong>
+    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #16131d !important; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding: 12px 0;">
+        <div class="container px-4">
+            <a class="navbar-brand-custom" href="../index.html">
+                <span class="parte-blanca">Elíxir</span> <span class="parte-dorada"> de Ensueño</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0 text-warning shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
                     <li class="nav-item">
                         <a class="nav-link" href="../index.html">Inicio</a>
                     </li>
@@ -33,21 +112,121 @@
                         <a class="nav-link" href="productos.html">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="contactos.html">Contactos</a>
+                        <a class="nav-link" href="#">Reseñas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="contactos.html">Contáctanos</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    <!-- Cabecera -->
+    <header class="py-5 text-center" style="background-color: #1c1528;">
+        <div class="container">
+            <p class="text-uppercase tracking-widest mb-2" style="color: #a393b3; font-size: 0.70rem; letter-spacing: 1px; font-family: 'Jost', sans-serif;">
+                Barra de autor <span style="color: #d4af37; margin: 0 5px;">·</span> Coctelería de colección
+            </p>
+            <h1 class="display-4 fw-normal text-light mb-3" style="font-family: 'Cormorant Garamond', serif; font-size: 3.2rem;">
+                Ponte en Contacto
+            </h1>
+            <div class="d-flex align-items-center justify-content-center my-3">
+                <div style="height: 1px; width: 100px; background: linear-gradient(to right, transparent, #d4af37);"></div>
+                <span class="mx-3 text-warning fs-5"><i class="bi bi-moon-stars"></i></span>
+                <div style="height: 1px; width: 100px; background: linear-gradient(to left, transparent, #d4af37);"></div>
+            </div>
+            <p class="text-muted" style="color: #bfaecf !important; font-family: 'Jost', sans-serif;">
+                ¿Tienes alguna duda, sugerencia o deseas reservar un evento mágico? Escríbenos.
+            </p>
+        </div>
+    </header>
+
     <!-- Contenido Principal -->
-  
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Alerta de éxito -->
+                <div id="successAlert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i> ¡Mensaje enviado con éxito! Tu elíxir de respuesta llegará pronto.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div class="card card-magica border-0 p-4 shadow-lg" style="background-color: #221831; border: 1px solid rgba(212, 175, 55, 0.2) !important;">
+                    <form id="contactForm" novalidate>
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label text-light">Nombre completo *</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark text-warning border-secondary"><i class="bi bi-person"></i></span>
+                                <input type="text" class="form-control bg-dark text-light border-secondary" id="nombre" placeholder="Tu nombre" required>
+                                <div class="invalid-feedback text-warning">Por favor ingresa tu nombre.</div>
+                            </div>
+                        </div>
+
+                        <!-- Correo -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-light">Correo electrónico *</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark text-warning border-secondary"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control bg-dark text-light border-secondary" id="email" placeholder="correo@ejemplo.com" required>
+                                <div class="invalid-feedback text-warning">Por favor ingresa un correo electrónico válido.</div>
+                            </div>
+                        </div>
+
+                        <!-- Teléfono y WhatsApp -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="telefono" class="form-label text-light">Número de contacto *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark text-warning border-secondary"><i class="bi bi-phone"></i></span>
+                                    <input type="tel" class="form-control bg-dark text-light border-secondary" id="telefono" placeholder="3001234567" required>
+                                    <div class="invalid-feedback text-warning">Ingresa un número válido.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="whatsapp" class="form-label text-light">WhatsApp *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark text-warning border-secondary"><i class="bi bi-whatsapp"></i></span>
+                                    <input type="tel" class="form-control bg-dark text-light border-secondary" id="whatsapp" placeholder="3001234567" required>
+                                    <div class="invalid-feedback text-warning">Ingresa tu número de WhatsApp.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ciudad de residencia -->
+                        <div class="mb-3 position-relative">
+                            <label for="ciudad" class="form-label text-light">Ciudad de residencia *</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark text-warning border-secondary"><i class="bi bi-geo-alt"></i></span>
+                                <input type="text" class="form-control bg-dark text-light border-secondary" id="ciudad" placeholder="Selecciona tu ciudad..." autocomplete="off" required>
+                                <div class="invalid-feedback text-warning">Por favor ingresa o selecciona tu ciudad.</div>
+                            </div>
+                            <div id="sugerencias-ciudades" class="list-group position-absolute w-100 shadow-lg" style="display: none;"></div>
+                        </div>
+
+                        <!-- Mensaje -->
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label text-light">Mensaje *</label>
+                            <textarea class="form-control bg-dark text-light border-secondary" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                            <div class="invalid-feedback text-warning">El mensaje no puede estar vacío.</div>
+                        </div>
+
+                        <!-- Botón -->
+                        <button type="submit" class="btn btn-magico-enviar w-100 py-2 fw-semibold">
+                            <i class="bi bi-send me-2"></i> Enviar Mensaje Mágico
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4 mt-5">
+    <footer class="text-center py-4 mt-5" style="background-color: #16131d !important; border-top: 1px solid rgba(255, 255, 255, 0.05);">
         <div class="container">
-            <p class="mb-0">&copy; 2026 Mi Sitio Web. Todos los derechos reservados.</p>
-            <small>Desarrollado con HTML, CSS, JavaScript y Bootstrap</small>
+            <p class="mb-1" style="color: #bfaecf; font-size: 0.95rem;">&copy; 2026 Elíxir de Ensueño. Todos los derechos reservados.</p>
+            <small style="color: #a393b3;">Desarrollado con HTML, CSS, JavaScript y Bootstrap</small>
         </div>
     </footer>
 
@@ -56,11 +235,59 @@
     <!-- Custom JS -->
     <script src="../src/scripts/script.js"></script>
 
+    <!-- Script de autocompletado y validación -->
     <script>
+        const listaCiudades = [
+            "Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena", 
+            "Cúcuta", "Bucaramanga", "Pereira", "Santa Marta", "Ibagué", 
+            "Manizales", "Villavicencio", "Pasto", "Montería", "Valledupar", 
+            "Armenia", "Bello", "Soledad", "Soacha", "Neiva"
+        ];
+
+        const inputCiudad = document.getElementById('ciudad');
+        const contenedorSugerencias = document.getElementById('sugerencias-ciudades');
+
+        inputCiudad.addEventListener('input', function() {
+            const valor = this.value.toLowerCase();
+            contenedorSugerencias.innerHTML = '';
+            
+            if (!valor) {
+                contenedorSugerencias.style.display = 'none';
+                return;
+            }
+
+            const filtradas = listaCiudades.filter(c => c.toLowerCase().includes(valor));
+
+            if (filtradas.length > 0) {
+                contenedorSugerencias.style.display = 'block';
+                filtradas.forEach(ciudad => {
+                    const item = document.createElement('a');
+                    item.href = '#';
+                    item.className = 'list-group-item list-group-item-action custom-suggestion-item';
+                    item.textContent = ciudad;
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        inputCiudad.value = ciudad;
+                        contenedorSugerencias.style.display = 'none';
+                        inputCiudad.classList.remove('is-invalid');
+                    });
+                    contenedorSugerencias.appendChild(item);
+                });
+            } else {
+                contenedorSugerencias.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!inputCiudad.contains(e.target) && !contenedorSugerencias.contains(e.target)) {
+                contenedorSugerencias.style.display = 'none';
+            }
+        });
+
         const form = document.getElementById('contactForm');
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            if (!form.checkValidity()) {
+            if (!form.checkValidity() || !inputCiudad.value.trim()) {
                 e.stopPropagation();
                 form.classList.add('was-validated');
                 return;

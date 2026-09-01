@@ -30,7 +30,10 @@ body {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
-
+.navbar-brand-custom {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+}
 .navbar-brand {
     font-size: 1.5rem;
     font-weight: 700;
@@ -244,4 +247,146 @@ footer small {
         flex-direction: column;
         gap: 1rem;
     }
+}
+
+/* =========================
+   ESTILOS CONTACTO - ELÍXIR DE ENSUEÑO (ACTUALIZADO)
+========================= */
+body.contacto-page {
+    background-color: #1A1225;
+    color: #F9F9FB;
+    font-family: 'Jost', sans-serif;
+}
+
+/* Forzar Cormorant Garamond exclusivamente en títulos y elementos de marca */
+.contacto-page h1, 
+.contacto-page h2, 
+.contacto-page h3, 
+.contacto-page .navbar-brand,
+.contacto-page .navbar-brand-custom {
+    font-family: 'Cormorant Garamond', serif !important;
+}
+
+/* Estilo específico para el logo unificado */
+.navbar-brand-custom {
+    font-size: 1.6rem;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    font-weight: 400 !important;
+}
+
+.navbar-brand-custom .parte-blanca {
+    color: #ffffff;
+}
+
+.navbar-brand-custom .parte-dorada {
+    color: #d4af37;
+}
+
+.contacto-page .card-magica {
+    background-color: rgba(74, 46, 101, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.6) !important;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3), inset 0 0 10px rgba(212, 175, 55, 0.1) !important;
+    color: #F9F9FB;
+}
+
+.contacto-page .form-control {
+    background-color: rgba(26, 18, 37, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #F9F9FB;
+    font-family: 'Jost', sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
+.contacto-page .form-control:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.contacto-page .form-control:focus {
+    background-color: rgba(26, 18, 37, 0.9);
+    border-color: #D4AF37;
+    color: #F9F9FB;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+}
+
+.contacto-page .form-label {
+    color: #F3E5F5;
+    font-weight: 500;
+}
+
+.contacto-page .input-group-text {
+    background-color: #4A2E65;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #D4AF37;
+}
+
+/* Opciones desplegables y menús personalizados */
+.contacto-page select.form-control option,
+.contacto-page .dropdown-menu {
+    background-color: #2D1B4E !important;
+    color: #F9F9FB !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+}
+
+.contacto-page select.form-control option:hover,
+.contacto-page .dropdown-item:hover {
+    background-color: #4A2E65 !important;
+    color: #D4AF37 !important;
+}
+
+.btn-oro-neon {
+    background-color: #D4AF37;
+    color: #1A1225;
+    font-weight: 600;
+    font-family: 'Jost', sans-serif;
+    border: none;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-oro-neon:hover {
+    background-color: #f3c951;
+    color: #1A1225;
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.9), 
+                0 0 50px rgba(212, 175, 55, 0.4);
+}
+
+/* Selector de ciudades estilizado */
+.contacto-page select.form-select {
+    background-color: rgba(26, 18, 37, 0.6) !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    color: #F9F9FB !important;
+    font-family: 'Jost', sans-serif !important;
+}
+
+.contacto-page select.form-select:hover {
+    border-color: #D4AF37 !important;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5) !important;
+}
+
+.contacto-page select.form-select:focus {
+    background-color: rgba(26, 18, 37, 0.9) !important;
+    border-color: #D4AF37 !important;
+    color: #F9F9FB !important;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.7) !important;
+}
+
+.contacto-page select.form-select option {
+    background-color: #2D1B4E !important;
+    color: #F9F9FB !important;
+    padding: 10px;
+}
+
+.contacto-page select.form-select option:hover,
+.contacto-page select.form-select option:focus {
+    background-color: #4A2E65 !important;
+    color: #D4AF37 !important;
+}
+
+/* Línea superior dorada brillante para el footer en contacto */
+.contacto-page footer {
+    border-top: 1px solid rgba(212, 175, 55, 0.6) !important;
+    box-shadow: 0 -5px 20px rgba(212, 175, 55, 0.2) !important;
 }
