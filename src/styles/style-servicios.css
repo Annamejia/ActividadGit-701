@@ -1,0 +1,117 @@
+/* --- PALETA DE COLORES PERSONALIZADA --- */
+/* 
+  #FFFFFF -> Blancos puros
+  #FFF8E8 -> Crema de fondo general
+  #FCD581 -> Amarillo / Dorado suave (Acentos y detalles)
+  #D52941 -> Rojo / Frambuesa (Botones y llamadas a la acción)
+  #990D35 -> Vino tinto oscuro (Navbar, Footer, Hero y Títulos)
+*/
+
+/* Cuerpo y fondos generales */
+body.custom-bg-body {
+    background-color: #FFF8E8 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar */
+.custom-navbar {
+    background-color: #990D35 !important;
+}
+
+.custom-brand {
+    color: #FCD581 !important;
+    transition: color 0.3s ease;
+}
+
+.custom-brand:hover {
+    color: #FFFFFF !important;
+}
+
+.navbar-nav .nav-link {
+    color: #FFF8E8 !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover, 
+.navbar-nav .nav-link.custom-nav-active {
+    color: #FCD581 !important;
+}
+
+/* Hero Section */
+.custom-hero {
+    background: linear-gradient(135deg, #990D35 0%, #660823 100%);
+    border-bottom: 4px solid #FCD581;
+}
+
+/* Tarjetas de Servicios */
+.custom-card {
+    background-color: #FFFFFF !important;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(153, 13, 53, 0.12) !important;
+}
+
+.custom-card-img {
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.custom-card:hover .custom-card-img {
+    transform: scale(1.05);
+}
+
+/* Badges sobre las imágenes */
+.custom-badge {
+    background-color: #990D35 !important;
+    color: #FCD581 !important;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 20px;
+}
+
+/* Botones de las tarjetas */
+.custom-btn-outline {
+    background-color: transparent;
+    border: 2px solid #D52941;
+    color: #D52941;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.custom-btn-outline:hover {
+    background-color: #D52941;
+    color: #FFFFFF;
+}
+
+/* Sección de Llamada a la Acción (CTA) */
+.custom-cta {
+    background-color: #990D35;
+    border-top: 4px solid #FCD581;
+    border-bottom: 4px solid #FCD581;
+}
+
+.custom-btn-solid {
+    background-color: #D52941 !important;
+    border: none;
+    color: #FFFFFF !important;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.custom-btn-solid:hover {
+    background-color: #b52237 !important;
+    transform: translateY(-2px);
+}
+
+/* Footer */
+.custom-footer {
+    background-color: #990D35 !important;
+    border-top: 2px solid rgba(252, 213, 129, 0.2);
+}
